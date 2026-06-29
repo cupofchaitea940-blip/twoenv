@@ -1,0 +1,6 @@
+resource_group_name  = "rg-prod-storage"
+location             = "Central India"
+storage_account_name = "prodstorageacct67890"
+account_tier         = "Standard"
+replication_type     = "GRS"
+environment          = "prod"
