@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    triggers {
-        githubPush()
-    }
-
     environment {
         ARM_CLIENT_ID       = credentials('azure-client-id')
         ARM_CLIENT_SECRET   = credentials('azure-client-secret')
@@ -13,20 +9,26 @@ pipeline {
     }
 
     stages {
-        stage('Deploy Dev') {
+        stage('Terraform Deploy') {
             steps {
-                dir('dev') {
-                    bat 'terraform init'
-                    bat 'terraform apply -auto-approve'
-                }
-            }
-        }
+                script {
+                    if (env.BRANCH_NAME == 'dev') {
+                        dir('dev') {
+                            bat 'terraform init'
+                            bat 'terraform validate'
+                            bat 'terraform plan -var-file="terraform.tfvars"'
+                            bat 'terraform apply -auto-approve -var-file="terraform.tfvars"'
+                        }
+                    }
 
-        stage('Deploy Prod') {
-            steps {
-                dir('prod') {
-                    bat 'terraform init'
-                    bat 'terraform apply -auto-approve'
+                    else if (env.BRANCH_NAME == 'main') {
+                        dir('prod') {
+                            bat 'terraform init'
+                            bat 'terraform validate'
+                            bat 'terraform plan -var-file="terraform.tfvars"'
+                            bat 'terraform apply -auto-approve -var-file="terraform.tfvars"'
+                        }
+                    }
                 }
             }
         }
