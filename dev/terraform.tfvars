@@ -1,6 +1,6 @@
 resource_group_name  = "rg-dev-storage"
 location             = "Central India"
-storage_account_name = "tanyastorage11111"
+storage_account_name = "dev"
 account_tier         = "Standard"
 replication_type     = "LRS"
 environment          = "dev"
