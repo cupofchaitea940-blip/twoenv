@@ -1,6 +1,6 @@
 resource_group_name  = "rg-dev-storage"
 location             = "Central India"
-storage_account_name = "dev"
+storage_account_name = "devblahblahblah"
 account_tier         = "Standard"
 replication_type     = "LRS"
 environment          = "dev"
